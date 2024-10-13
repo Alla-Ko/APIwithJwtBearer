@@ -38,18 +38,21 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options =>
     options.Password.RequireNonAlphanumeric = false;
     //options.Password.RequiredUniqueChars = 0;
 
-}).AddEntityFrameworkStores<UserContext>();
+})
+    .AddRoles<IdentityRole>()
+    .AddEntityFrameworkStores<UserContext>();
 builder.Services.AddScoped<IServiceProducts, ServiceProducts>();
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-
+//builder.Services.AddAuthorization(options =>
+//{
+//    options.AddPolicy("MyAdminRole", policy => policy.RequireRole("admin"));
+//});
 var app = builder.Build();
-using (var scope = app.Services.CreateScope())
-{
-    var services = scope.ServiceProvider;
+using var scope = app.Services.CreateScope();
+var services = scope.ServiceProvider;
+SeedData.Initialize(services);
 
-    SeedData.Initialize(services);
-}
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
@@ -68,6 +71,7 @@ app.UseRouting();
 
 app.UseAuthentication(); // Додаємо автентифікацію
 app.UseAuthorization();
+
 
 app.MapStaticAssets();
 

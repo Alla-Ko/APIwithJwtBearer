@@ -1,0 +1,37 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelper
+@{
+    Layout = "_Layout";
+}
+@{
+    ViewData["Title"] = "Create Role";
+}
+
+<h3>Create Role</h3>
+<form asp-action="CreateRole" method="post">
+    <div class="mb-3">
+        <label for="roleName" class="form-label">Role Name:</label>
+        <input class="form-control" type="text" id="roleName" name="roleName" required />
+
+    </div>
+    <button class="btn btn-primary" type="submit">Create</button>
+    <div class="mb-3">
+        <span class="text-danger">
+            @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+            {
+                @ViewBag.ErrorMessage
+            }
+        </span>
+    </div>
+
+</form>
+<div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+    <ul class="navbar-nav flex-grow-1">
+        <li class="nav-item">
+
+            <a asp-area="" asp-controller="User" asp-action="Register">Registration</a>
+        </li>
+        <li class="nav-item">
+            <a asp-area="" asp-controller="Products" asp-action="Index">Home</a>
+        </li>
+    </ul>
+</div>

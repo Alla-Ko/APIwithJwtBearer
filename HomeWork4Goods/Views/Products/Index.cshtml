@@ -1,4 +1,4 @@
-﻿@model IEnumerable<HomeWork4Goods.Models.Product>
+﻿@model IEnumerable<HomeWork4Products.Models.Product>
 @using Microsoft.AspNetCore.Identity
 @{
     ViewData["Title"] = "Index";
@@ -9,6 +9,37 @@
         <button type="submit" class="btn btn-info">Log out</button>
     </form>
 </div>
+@{
+    if (User.IsInRole("admin"))
+    {
+        <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+            <ul class="navbar-nav flex-grow-1">
+                <li class="nav-item">
+
+                    <a asp-area="" asp-controller="User" asp-action="Register">Registration</a>
+                </li>
+                <li class="nav-item">
+
+                    <a asp-area="" asp-controller="User" asp-action="CreateRole">Create Role</a>
+                </li>
+                <li class="nav-item">
+
+                    <a asp-area="" asp-controller="User" asp-action="AssignRole">Assign Role</a>
+                </li>
+                <li class="nav-item">
+                    <a asp-area="" asp-controller="Products" asp-action="Index">Products</a>
+                </li>
+            </ul>
+        </div>
+    }
+    else
+    {
+        <div class="mb-3 text-center">
+            <p>User is not admin</p>
+        </div>
+    }
+}
+
 <div class="mb-3 text-center">
     <h1>Our products</h1>
 </div>
@@ -52,9 +83,17 @@
                     @Html.DisplayFor(modelItem => item.Description)
                 </td>
                 <td class="text-nowrap">
+                    @if (User.IsInRole("admin"))
+                    {
                     <a class="btn btn-info btn-sm" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                    }
+                    
                     <a class="btn btn-warning btn-sm" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                    @if (User.IsInRole("admin"))
+                    {
                     <a class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    }
+                    
                 </td>
             </tr>
         }
