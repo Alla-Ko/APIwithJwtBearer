@@ -1,5 +1,6 @@
 ﻿using HomeWork4Products.Models;
 using HomeWork4Products.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,6 +19,7 @@ namespace HomeWork4Products.Controllers
         }
 
         // GET: api/APIProducts
+        //[Authorize]
         [HttpGet]
         public async Task<IActionResult> GetAllProducts(string searchString = "")
         {
@@ -49,6 +51,7 @@ namespace HomeWork4Products.Controllers
 
 
         // POST: api/APIProducts
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [Authorize(Roles = "admin")]
         [HttpPost]
 
@@ -68,6 +71,7 @@ namespace HomeWork4Products.Controllers
 
 
         // PUT: api/APIProducts/5
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [Authorize(Roles = "admin")]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateProduct(int id, Product product)
@@ -87,6 +91,7 @@ namespace HomeWork4Products.Controllers
         }
 
         // DELETE: api/APIProducts/5
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [Authorize(Roles = "admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProduct(int id)

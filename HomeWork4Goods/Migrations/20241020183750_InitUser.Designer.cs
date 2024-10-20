@@ -8,18 +8,18 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace HomeWork4Products.Migrations.User
+namespace HomeWork4Products.Migrations
 {
     [DbContext(typeof(UserContext))]
-    [Migration("20241009150213_CreateIdentitySchema")]
-    partial class CreateIdentitySchema
+    [Migration("20241020183750_InitUser")]
+    partial class InitUser
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.0-rc.1.24451.1")
+                .HasAnnotation("ProductVersion", "9.0.0-rc.2.24474.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
