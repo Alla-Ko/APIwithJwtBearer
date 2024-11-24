@@ -16,7 +16,7 @@ var supportedCultures = new[]
     new CultureInfo("uk-UA"),
     new CultureInfo("en-US")
 };
-
+        
 var localizationOptions = new RequestLocalizationOptions
 {
     DefaultRequestCulture = new RequestCulture(defaultCulture),
@@ -82,6 +82,16 @@ builder.Services.AddAuthorization(options =>
     // Можна додати політики для ролей, якщо необхідно
     //options.AddPolicy("RequireAdministratorRole", policy => policy.RequireRole("Administrator"));
 });
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAllOrigins", builder =>
+    {
+        builder.AllowAnyOrigin()  // Дозволяє всі домени
+               .AllowAnyMethod()  // Дозволяє всі HTTP методи
+               .AllowAnyHeader(); // Дозволяє всі заголовки
+    });
+});
+
 
 // Реєструємо сервіс для продуктів
 builder.Services.AddScoped<IServiceProducts, ServiceProducts>();
@@ -103,10 +113,15 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRequestLocalization(localizationOptions);
 app.UseRouting();
+
+// Додаємо підтримку CORS
+app.UseCors("AllowAllOrigins");
 
 // Додаємо автентифікацію та авторизацію
 app.UseAuthentication();

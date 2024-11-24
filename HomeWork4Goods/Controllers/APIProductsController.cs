@@ -20,6 +20,7 @@ namespace HomeWork4Products.Controllers
 
         // GET: api/APIProducts
         //[Authorize]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpGet]
         public async Task<IActionResult> GetAllProducts(string searchString = "")
         {
@@ -31,6 +32,7 @@ namespace HomeWork4Products.Controllers
         }
 
         // GET: api/APIProducts/5
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetProduct(int? id)
         {
